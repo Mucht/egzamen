@@ -11,9 +11,13 @@
 "use strict";
 
 var
-    gulp = require( "gulp" ),
-    gEslint = require( "gulp-eslint" ),
-    babel = require("gulp-babel");
+gulp = require( "gulp" ),
+gEslint = require( "gulp-eslint" ),
+gBabel = require( "gulp-babel" ),
+gUtil = require( "gulp-util" ),
+Mongo = require( "mongodb" ),
+ObjectID = Mongo.ObjectID,
+MongoClient = Mongo.MongoClient;
 
 gulp.task( "lint", function(){
     return gulp
@@ -27,6 +31,12 @@ gulp.task( "build", function(){
     .src( "src/**/*.js" )
     .pipe( babel() )
     .pipe( gulp.dest( "bin" ) );
+} );
+
+gulp.task( "reset-db", function( fNext ){
+    // 1. Check if INSIDE vagrant
+    // 2. drop database
+    // 3. parse & fill export.json
 } );
 
 gulp.task( "watch", function(){
