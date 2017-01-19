@@ -35,8 +35,39 @@ gulp.task( "build", function(){
 
 gulp.task( "reset-db", function( fNext ){
     // 1. Check if INSIDE vagrant
+    if ( process.env.USER !== "vagrant" ) {
+        gUtil.beep();
+        gUtil.log( gUtil.color.pink( "This task must be runned from INSIDE the vagrant box damn it !" ) );
+        return fNext();
+    }
+    // Connect to the MongoDB
+    MongoClient.connect( "mongodb://127.0.0.1.27017/egzamen", function( oError, oDB ){
+
+        if ( oError ) {
+            gUtil.beep();
+            return fNext( oError );
+        }
+
+    } );
+
     // 2. drop database
-    // 3. parse & fill export.json
+    oDB.dropDatabase()
+       .then( function(){
+           // 3. parse & fill export.json
+           var aExports = require( __direname + "/data/export.json" );
+
+           return oDB.collection( "exports" ).insertMany();
+       } )
+       .then( function(){
+           oDB.close();
+           gUtil.log( gUtil.color.green( "GG ! The DB has been resetted !" ) );
+           fNext();
+       } )
+       .catch( function( oError ){
+          //If error => desconnect the DB
+          oDB.close();
+          fNext( oError );
+       } )
 } );
 
 gulp.task( "watch", function(){
