@@ -14,9 +14,15 @@
     "gulp": "^3.9.1",
     "gulp-babel": "^6.1.2",
     "gulp-eslint": "^3.0.1",
-    "gulp-util": "^3.0.8",
+    "gulp-util": "^3.0.8"
   },
   "dependencies": {
-    "mongodb": "^2.2.21"
+    "bluebird": "^3.4.7",
+    "body-parser": "^1.16.0",
+    "express": "^4.14.0",
+    "mitan-eko": "^0.1.0",
+    "mongodb": "^2.2.21",
+    "response-time": "^2.3.2",
+    "zouti": "^0.5.0"
   }
 }

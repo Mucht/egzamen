@@ -29,7 +29,7 @@ gulp.task( "lint", function(){
 gulp.task( "build", function(){
   return gulp
     .src( "src/**/*.js" )
-    .pipe( babel() )
+    .pipe( gBabel() )
     .pipe( gulp.dest( "bin" ) );
 } );
 
@@ -37,7 +37,7 @@ gulp.task( "reset-db", function( fNext ){
     // 1. Check if INSIDE vagrant
     if ( process.env.USER !== "vagrant" ) {
         gUtil.beep();
-        gUtil.log( gUtil.color.pink( "This task must be runned from INSIDE the vagrant box damn it !" ) );
+        gUtil.log( gUtil.colors.red( "This task must be runned from INSIDE the vagrant box damn it !" ) );
         return fNext();
     }
     // Connect to the MongoDB
@@ -60,7 +60,7 @@ gulp.task( "reset-db", function( fNext ){
        } )
        .then( function(){
            oDB.close();
-           gUtil.log( gUtil.color.green( "GG ! The DB has been resetted !" ) );
+           gUtil.log( gUtil.colors.green( "GG ! The DB has been resetted !" ) );
            fNext();
        } )
        .catch( function( oError ){
