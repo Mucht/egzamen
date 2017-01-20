@@ -6,11 +6,8 @@
  * started at 20/01/2017
 */
 
+import { send } from "../../core/utils/api.js";
+
 export default function( oRequest, oResponse ) {
-    oResponse.json( {
-        "url": oRequest.url,
-        "timestamp": Date.now(),
-        "data": true,
-        "error": false,
-    } );
+    send( oRequest, oResponse, true );
 }
