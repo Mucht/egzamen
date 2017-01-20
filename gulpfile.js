@@ -48,26 +48,25 @@ gulp.task( "reset-db", function( fNext ){
             return fNext( oError );
         }
 
+        // 2. drop database
+        oDB.dropDatabase()
+           .then( function(){
+               // 3. parse & fill export.json
+               var aExports = require( __direname + "/data/export.json" );
+
+               return oDB.collection( "exports" ).insertMany();
+           } )
+           .then( function(){
+               oDB.close();
+               gUtil.log( gUtil.colors.green( "GG ! The DB has been resetted !" ) );
+               fNext();
+           } )
+           .catch( function( oError ){
+              //If error => desconnect the DB
+              oDB.close();
+              fNext( oError );
+           } )
     } );
-
-    // 2. drop database
-    oDB.dropDatabase()
-       .then( function(){
-           // 3. parse & fill export.json
-           var aExports = require( __direname + "/data/export.json" );
-
-           return oDB.collection( "exports" ).insertMany();
-       } )
-       .then( function(){
-           oDB.close();
-           gUtil.log( gUtil.colors.green( "GG ! The DB has been resetted !" ) );
-           fNext();
-       } )
-       .catch( function( oError ){
-          //If error => desconnect the DB
-          oDB.close();
-          fNext( oError );
-       } )
 } );
 
 gulp.task( "watch", function(){
