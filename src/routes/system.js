@@ -7,12 +7,15 @@
 */
 
 import { Router } from "express";
-import sysPingController from "../controllers.system/ping.js";
+
+import sysPingController from "../controllers/system/ping.js";
+import sysEchoController from "../controllers/system/echo.js";
+import sysErrorController from "../controllers/system/error.js";
 
 let oRouter = new Router();
 
 oRouter.get( "/sys/ping", sysPingController );
-// oRouter.get( "/sys/echo" );
-// oRouter.get( "/sys/error" );
+oRouter.get( "/sys/echo", sysEchoController );
+oRouter.get( "/sys/error", sysErrorController );
 
 export default oRouter;
