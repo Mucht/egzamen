@@ -34,12 +34,12 @@ export default function( oRequest, oResponse ) {
                 return error( oRequest, oResponse, "Unknown Export", 404 );
             }
 
-            let { _id, name, latitude, longitude, address, hours } = oExport,
+            let { _id, name, slug, latitude, longitude, address, hours } = oExport,
                 oCleanExport;
 
             oCleanExport = {
                 "id": _id,
-                name, latitude, longitude, address, hours,
+                name, slug, latitude, longitude, address, hours,
             };
 
             if ( oCurrentPosition ) {
