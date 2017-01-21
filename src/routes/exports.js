@@ -8,7 +8,7 @@
 
 import { Router } from "express";
 
-// import list from "../controllers/exports/list";
+import list from "../controllers/exports/list";
 import details from "../controllers/exports/details";
 // import create from "../controllers/exports/create";
 // import update from "../controllers/exports/update";
@@ -16,7 +16,7 @@ import details from "../controllers/exports/details";
 
 let oRouter = new Router();
 
-// oRouter.get( "/exports", list );
+oRouter.get( "/exports", list );
 oRouter.get( "/exports/:id", details );
 // oRouter.post( "/exports", create );
 // oRouter.patch( "/exports", update );
