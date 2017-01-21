@@ -9,7 +9,7 @@
 import { Router } from "express";
 
 // import list from "../controllers/exports/list";
-// import details from "../controllers/exports/details";
+import details from "../controllers/exports/details";
 // import create from "../controllers/exports/create";
 // import update from "../controllers/exports/update";
 // import destroy from "../controllers/exports/destroy";
@@ -17,7 +17,7 @@ import { Router } from "express";
 let oRouter = new Router();
 
 // oRouter.get( "/exports", list );
-// oRouter.get( "/exports/:slug", details );
+oRouter.get( "/exports/:slug", details );
 // oRouter.post( "/exports", create );
 // oRouter.patch( "/exports", update );
 // oRouter.delete( "/exports", destroy );
