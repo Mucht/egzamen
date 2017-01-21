@@ -20,6 +20,7 @@ export default function( oRequest, oResponse ) {
         sName = ( POST.name || "" ).trim(),
         oPosition = checkPosition( iLatitude, iLongitude ),
         oExport = {},
+        aHours = POST.hours,
         sSlug = ( POST.name || "" ).trim()
             .replace( " ", "-" )
             .toLowerCase();
@@ -38,6 +39,7 @@ export default function( oRequest, oResponse ) {
     sName && ( oExport.name = sName );
     sSlug && ( oExport.slug = sSlug );
     sAddress && ( oExport.address = sAddress );
+    aHours && ( oExport.hours = aHours );
 
     getExports()
         .insertOne( oExport )
@@ -50,6 +52,7 @@ export default function( oRequest, oResponse ) {
                 "address": oExport.address || null,
                 "latitude": oExport.latitude,
                 "longitude": oExport.longitude,
+                "hours": oExport.hours,
             }, 201 );
         } )
         .catch( ( oError ) => error( oRequest, oResponse, oError ) );
