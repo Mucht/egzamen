@@ -28,12 +28,14 @@ export default function( oRequest, oResponse ) {
             "_id": new ObjectID( sExportID ),
             "deleted_at": null,
         } )
-        .then( ( { _id, name, latitude, longitude, address, hours } ) => {
-            let oCleanExport;
+        .then( ( oExport ) => {
 
-            if ( !_id ) {
+            if ( !oExport ) {
                 return error( oRequest, oResponse, "Unknown Export", 404 );
             }
+
+            let { _id, name, latitude, longitude, address, hours } = oExport,
+                oCleanExport;
 
             oCleanExport = {
                 "id": _id,
