@@ -12,7 +12,7 @@ import list from "../controllers/exports/list";
 import details from "../controllers/exports/details";
 import create from "../controllers/exports/create";
 // import update from "../controllers/exports/update";
-// import destroy from "../controllers/exports/destroy";
+import destroy from "../controllers/exports/destroy";
 
 let oRouter = new Router();
 
@@ -20,6 +20,6 @@ oRouter.get( "/exports", list );
 oRouter.get( "/exports/:id", details );
 oRouter.post( "/exports", create );
 // oRouter.patch( "/exports/:id", update );
-// oRouter.delete( "/exports/:id", destroy );
+oRouter.delete( "/exports/:id", destroy );
 
 export default oRouter;
