@@ -9,13 +9,24 @@
 import getExports from "../../models/exports.js";
 import { send, error } from "../../core/utils/api";
 import { ObjectID } from "mongodb";
+import distance from "jeyo-distans";
 
 export default function( oRequest, oResponse ) {
 
-    let sExportID = ( oRequest.params.id || "" ).trim();
+    let sExportID = ( oRequest.params.id || "" ).trim(),
+        iLatitude = +oRequest.query.latitude,
+        iLongitude = +oRequest.query.longitude,
+        oCurrentPosition;
 
     if ( !sExportID ) {
         error( oRequest, oResponse, "Invalid ID !", 400 );
+    }
+
+    if ( !isNaN( iLatitude ) && !isNaN( iLongitude ) ) {
+        oCurrentPosition = {
+            "latitude": iLatitude,
+            "longitude": iLongitude,
+        };
     }
 
     getExports()
@@ -34,6 +45,10 @@ export default function( oRequest, oResponse ) {
                 "id": _id,
                 name, latitude, longitude, address, hours,
             };
+
+            if ( oCurrentPosition ) {
+                oCleanExport.distance = distance( oCurrentPosition, oCleanExport ) * 1000;
+            }
 
             send( oRequest, oResponse, oCleanExport );
         } )

@@ -1533,6 +1533,10 @@ isobject@^2.0.0:
   dependencies:
     isarray "1.0.0"
 
+jeyo-distans:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/jeyo-distans/-/jeyo-distans-0.2.0.tgz#9616fb0938ef1097b31a46709316febdfd423205"
+
 js-tokens@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/js-tokens/-/js-tokens-2.0.0.tgz#79903f5563ee778cc1162e6dcf1a0027c97f9cb5"

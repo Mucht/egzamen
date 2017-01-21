@@ -17,7 +17,7 @@ import details from "../controllers/exports/details";
 let oRouter = new Router();
 
 // oRouter.get( "/exports", list );
-oRouter.get( "/exports/:slug", details );
+oRouter.get( "/exports/:id", details );
 // oRouter.post( "/exports", create );
 // oRouter.patch( "/exports", update );
 // oRouter.delete( "/exports", destroy );
