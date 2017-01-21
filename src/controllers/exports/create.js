@@ -43,6 +43,14 @@ export default function( oRequest, oResponse ) {
         .insertOne( oExport )
         .then( () => {
             send( oRequest, oResponse, oExport, 201 );
+            send( oRequest, oResponse, {
+                "id": oExport._id,
+                "name": oExport.name || null,
+                "slug": oExport.slug || null,
+                "address": oExport.address || null,
+                "latitude": oExport.latitude,
+                "longitude": oExport.longitude,
+            }, 201 );
         } )
         .catch( ( oError ) => error( oRequest, oResponse, oError ) );
 
