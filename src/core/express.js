@@ -12,6 +12,7 @@ import responseTime from "response-time";
 import mitanEko from "mitan-eko";
 import zouti from "zouti";
 import systemRoutes from "../routes/system";
+import exportsRoutes from "../routes/exports";
 
 const APP_PORT = "12345";
 
@@ -19,7 +20,7 @@ let oApp,
     fInit;
 
 fInit = function( iAppPort = APP_PORT ) {
-    if( oApp ) {
+    if ( oApp ) {
         return oApp;
     }
 
@@ -30,15 +31,16 @@ fInit = function( iAppPort = APP_PORT ) {
     oApp.use( responseTime() );
     oApp.use( bodyParser.json() );
     oApp.use( bodyParser.urlencoded( {
-        "extended": true;
+        "extended": true,
     } ) );
 
     // routes
     oApp.use( systemRoutes );
+    oApp.use( exportsRoutes );
 
     // listening
     oApp.listen( iAppPort, () => {
-        zouti.success( `Server is lestening on ${ iAppPort }`, "egzamen" )
+        zouti.success( `Server is lestening on ${ iAppPort }`, "egzamen" );
     } );
 };
 
