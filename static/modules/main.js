@@ -6,8 +6,11 @@
  * started at 23/01/2017
 */
 
-import utils from "./utils";
+import Vue from "vue";
 
-console.log( "Booom !" );
-
-utils();
+let oApp = new Vue( {
+    "el": "#app",
+    "data": {
+        "slogan": "For real !",
+    },
+} );
