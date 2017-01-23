@@ -35,8 +35,8 @@ gulp.task( "modules", function() {
         .pipe( sourceStream( "app.js" ) )
         .pipe( gulp.dest( "static/js/" ) )
         .pipe( buffer() )
-        .pipe( fRename( "app.min.js" ) )
-        .pipe( gUgligy().on( "error", console.log ) )
+        .pipe( gRename( "app.min.js" ) )
+        .pipe( gUglify().on( "error", console.log ) )
         .pipe( gulp.dest( "static/js/" ) );
 } );
 
