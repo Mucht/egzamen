@@ -27,10 +27,16 @@ gulp.task( "lint", function(){
 } );
 
 gulp.task( "build", function(){
-  return gulp
-    .src( "src/**/*.js" )
-    .pipe( gBabel() )
-    .pipe( gulp.dest( "bin" ) );
+    return gulp
+        .src( "src/**/*.js" )
+        .pipe( gBabel() )
+        .pipe( gulp.dest( "bin" ) );
+} );
+
+gulp.task( "views", function(){
+    return gulp
+        .src( "src/views/**" )
+        .pipe( gulp.dest( "bin/views" ) );
 } );
 
 gulp.task( "reset-db", function( fNext ){
@@ -71,8 +77,9 @@ gulp.task( "reset-db", function( fNext ){
 
 gulp.task( "watch", function(){
     gulp.watch( "src/**/*.js", [ "build" ] );
+    gulp.watch( "src/wiexs/**", [ "views" ] );
 } );
 
-gulp.task( "default", [ "build" ] );
+gulp.task( "default", [ "build", "views" ] );
 
-gulp.task( "work", [ "build", "watch" ] );
+gulp.task( "work", [ "build", "views", "watch" ] );
