@@ -8,25 +8,56 @@
 
 import Vue from "vue";
 
+Vue.component( "teammates-list", {
+    "props": [ "elements" ],
+    "template": `
+        <ul>
+            <li v-for="teammate in elements">
+                <strong>{{ teammate.heroName }}</strong>
+                <span>( {{ teammate.realName }} )</span>
+            </li>
+        </ul>
+    `,
+} );
+
+Vue.component( "secret", {
+    "props": [ "content" ],
+    "data": function() {
+        return {
+            "reveal": {
+                "show": "Reveal the secrets!",
+                "hide": "Hide the secrets!",
+                "value": "Reveal the secrets!",
+            },
+            "state": false,
+        };
+    },
+    "template": `
+        <div>
+            <p>Voulez vous savoir qui se cache derrière le masque d'Iron Man ?</p>
+            <strong v-if="state">{{ content }}</strong>
+            <button v-on:click="revealSecret">{{ reveal.value }}</button>
+        </div>
+    `,
+    "methods": {
+        "revealSecret": function() {
+            this.state = !this.state;
+            this.reveal.value = this.state ? this.reveal.hide : this.reveal.show;
+        },
+    },
+} );
+
 let oApp = new Vue( {
-    "el": "#app",
     "template": `
         <div class="box">
             <p>{{ slogan }}</p>
-            <ul>
-                <li v-for="teammate in teammates">
-                    <strong>{{ teammate.heroName }}</strong>
-                    <span>( {{ teammate.realName }} )</span>
-                </li>
-            </ul>
-            <p>Voulez vous savoir qui se cache derrière le masque d'Iron Man ?</p>
-            <strong v-if="secret">Tony Stark</strong>
-            <button v-on:click="revealSecret">{{ reveal.value }}</button>
+            <teammates-list v-bind:elements="teammates"></teammates-list>
+            <secret v-bind:content="secret"></secret>
         </div>
     `,
     "data": {
         "slogan": "Ses co-équipiers :",
-        "secret": false,
+        "secret": "Tony Stark",
         "teammates": [
             {
                 "heroName": "Captain America",
@@ -45,17 +76,7 @@ let oApp = new Vue( {
                 "realName": "Natasha Romanoff",
             },
         ],
-        "reveal": {
-            "show": "Reveal the secret",
-            "hide": "Hide the secret",
-            "value": "Reveal the secret",
-        },
-    },
-    "methods": {
-        "revealSecret": function() {
-            this.secret = !this.secret;
-            this.reveal.value = this.secret ? this.reveal.hide : this.reveal.show;
-        },
+
     },
 } );
 
