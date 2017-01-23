@@ -11,8 +11,9 @@ import bodyParser from "body-parser";
 import responseTime from "response-time";
 import mitanEko from "mitan-eko";
 import zouti from "zouti";
-import systemRoutes from "../routes/system";
-import exportsRoutes from "../routes/exports";
+import systemRoutes from "../routes/system.js";
+import exportsRoutes from "../routes/exports.js";
+import pagesRoutes from "../routes/pages.js";
 
 const APP_PORT = "12345";
 
@@ -37,6 +38,7 @@ fInit = function( iAppPort = APP_PORT ) {
     // routes
     oApp.use( systemRoutes );
     oApp.use( exportsRoutes );
+    oApp.use( pagesRoutes );
 
     // listening
     oApp.listen( iAppPort, () => {
