@@ -7,5 +7,5 @@
 */
 
 export default function( oRequest, oResponse ) {
-    oResponse.send( "I am Iron Man !" );
+    oResponse.render( "index" );
 }
