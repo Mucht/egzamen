@@ -17,8 +17,21 @@ gEslint = require( "gulp-eslint" ),
 gBabel = require( "gulp-babel" ),
 gUtil = require( "gulp-util" ),
 Mongo = require( "mongodb" ),
+browserify = require( "browserify" ),
+babelify = require( "babelify" ),
+sourceStream = require( "vinyl-source-stream" ),
 ObjectID = Mongo.ObjectID,
 MongoClient = Mongo.MongoClient;
+
+gulp.task( "modules", function() {
+    browserify( "static/modules/main.js" )
+        .transform( babelify, {
+            "presets": [ "es2015" ],
+        } )
+        .bundle()
+        .pipe( sourceStream( "app.js" ) )
+        .pipe( gulp.dest( "static/js/" ) );
+} );
 
 gulp.task( "styles", function(){
     return gulp
@@ -90,9 +103,10 @@ gulp.task( "reset-db", function( fNext ){
 gulp.task( "watch", function(){
     gulp.watch( "src/**/*.js", [ "build" ] );
     gulp.watch( "src/wiexs/**", [ "views" ] );
-    gulp.watch( "static/sass/**/*.scss", [ "styles" ] )
+    gulp.watch( "static/sass/**/*.scss", [ "styles" ] );
+    gulp.watch( "static/modules/**/*.js", [ "modules" ] );
 } );
 
-gulp.task( "default", [ "build", "views", "styles" ] );
+gulp.task( "default", [ "build", "views", "styles", "modules" ] );
 
 gulp.task( "work", [ "default", "watch" ] );
