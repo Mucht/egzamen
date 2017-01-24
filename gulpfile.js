@@ -11,20 +11,63 @@
 "use strict";
 
 var
-gulp = require( "gulp" ),
-gSass = require( "gulp-sass" ),
-gEslint = require( "gulp-eslint" ),
-gBabel = require( "gulp-babel" ),
-gUtil = require( "gulp-util" ),
-Mongo = require( "mongodb" ),
-browserify = require( "browserify" ),
-babelify = require( "babelify" ),
-sourceStream = require( "vinyl-source-stream" ),
-buffer = require( "vinyl-buffer" ),
-gRename = require( "gulp-rename" ),
-gUglify = require( "gulp-uglify" ),
-ObjectID = Mongo.ObjectID,
-MongoClient = Mongo.MongoClient;
+    sUser = process.env.USER,
+    gulp = require( "gulp" ),
+    gSass = sUser !== "vagrant" && require( "gulp-sass" ), // cf. NOTE
+    gEslint = require( "gulp-eslint" ),
+    gBabel = require( "gulp-babel" ),
+    gUtil = require( "gulp-util" ),
+    Mongo = require( "mongodb" ),
+    browserify = require( "browserify" ),
+    babelify = require( "babelify" ),
+    sourceStream = require( "vinyl-source-stream" ),
+    buffer = require( "vinyl-buffer" ),
+    gRename = require( "gulp-rename" ),
+    gUglify = require( "gulp-uglify" ),
+    ObjectID = Mongo.ObjectID,
+    MongoClient = Mongo.MongoClient;
+
+// NOTE: As we see in class, gulp-sass cause somes issues when you try to run the reset-db task from inside the vagrant.
+// As we know that this will be the only task to run from vagrant, we put it inside an if, then add a return : from inside the vagrant, only the reset-db task will be accessible.
+if ( sUeser == "vagrant" ) {
+    gulp.task( "reset-db", function( fNext ){
+        // 1. Check if INSIDE vagrant
+        if ( process.env.USER !== "vagrant" ) {
+            gUtil.beep();
+            gUtil.log( gUtil.colors.red( "This task must be runned from INSIDE the vagrant box damn it !" ) );
+            return fNext();
+        }
+        // Connect to the MongoDB
+        MongoClient.connect( "mongodb://127.0.0.1:27017/egzamen", function( oError, oDB ){
+
+            if ( oError ) {
+                gUtil.beep();
+                return fNext( oError );
+            }
+
+            // 2. drop database
+            oDB.dropDatabase()
+               .then( function(){
+                   // 3. parse & fill export.json
+                   var aExports = require( __dirname + "/data/export.json" );
+
+                   return oDB.collection( "exports" ).insertMany( aExports );
+               } )
+               .then( function(){
+                   oDB.close();
+                   gUtil.log( gUtil.colors.green( "GG ! The DB has been resetted !" ) );
+                   fNext();
+               } )
+               .catch( function( oError ){
+                  //If error => desconnect the DB
+                  oDB.close();
+                  fNext( oError );
+               } )
+        } );
+    } );
+
+    return;
+}
 
 gulp.task( "modules", function() {
     browserify( "static/modules/main.js" )
@@ -69,42 +112,6 @@ gulp.task( "views", function(){
     return gulp
         .src( "src/views/**" )
         .pipe( gulp.dest( "bin/views" ) );
-} );
-
-gulp.task( "reset-db", function( fNext ){
-    // 1. Check if INSIDE vagrant
-    if ( process.env.USER !== "vagrant" ) {
-        gUtil.beep();
-        gUtil.log( gUtil.colors.red( "This task must be runned from INSIDE the vagrant box damn it !" ) );
-        return fNext();
-    }
-    // Connect to the MongoDB
-    MongoClient.connect( "mongodb://127.0.0.1:27017/egzamen", function( oError, oDB ){
-
-        if ( oError ) {
-            gUtil.beep();
-            return fNext( oError );
-        }
-
-        // 2. drop database
-        oDB.dropDatabase()
-           .then( function(){
-               // 3. parse & fill export.json
-               var aExports = require( __dirname + "/data/export.json" );
-
-               return oDB.collection( "exports" ).insertMany( aExports );
-           } )
-           .then( function(){
-               oDB.close();
-               gUtil.log( gUtil.colors.green( "GG ! The DB has been resetted !" ) );
-               fNext();
-           } )
-           .catch( function( oError ){
-              //If error => desconnect the DB
-              oDB.close();
-              fNext( oError );
-           } )
-    } );
 } );
 
 gulp.task( "watch", function(){
