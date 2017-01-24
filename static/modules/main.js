@@ -8,15 +8,15 @@
 
 import Vue from "vue";
 import VueRouter from "vue-router";
-import ExportsList from "./components/exports-list.js";
-import ExportDetails from "./components/exports-details.js";
+import ExportsList from "./components/exports/list.js";
+import ExportsDetails from "./components/exports/details.js";
 
 Vue.use( VueRouter );
 
 let oRouter = new VueRouter( {
     "routes": [
         { "path": "/", "component": ExportsList },
-        { "path": "/:id", "component": ExportDetails },
+        { "path": "/:id", "component": ExportsDetails },
     ],
 } );
 

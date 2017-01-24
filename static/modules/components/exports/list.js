@@ -1,6 +1,6 @@
 /* RIA/egzamen
  *
- * /static/modules/components/exports-list.js - Export-list.js
+ * /static/modules/components/exports/list.js - Exports list Vue component
  *
  * Coded by Mucht - Mathieu Claessens
  * started at 24/01/2017
@@ -8,8 +8,9 @@
 
 import Vue from "vue";
 import reqwest from "reqwest";
+import getLocation from "../../utils/location-manager.js";
 
-const GEOLOCALISATION_OPTIONS = { "enableHightAccurency": true };
+const GEOLOCALISATION_OPTIONS = { "enableHightAccuracy": true };
 
 let oExportsList = Vue.component( "exports-list", {
     "data": function() {
@@ -26,8 +27,7 @@ let oExportsList = Vue.component( "exports-list", {
             </div>
             <div class="error" v-if="loaded && error">
                 <p>
-                    <strong>Error:</strong>
-                    {{ error.message }}
+                    <strong>Error:</strong> {{ error }}
                 </p>
             </div>
             <ul v-if="loaded">
@@ -44,31 +44,28 @@ let oExportsList = Vue.component( "exports-list", {
     "methods": {
         updateExports() {
             // User position
-            navigator.geolocation.getCurrentPosition( this.geoSuccess, this.showError, GEOLOCALISATION_OPTIONS );
+            return getLocation()
+                .then( ( { coords } ) => {
+                    // Get export at position
+                    return reqwest( {
+                        "url": "/exports",
+                        "method": "get",
+                        "data": {
+                            "latitude": coords.latitude,
+                            "longitude": coords.longitude,
+                        },
+                    } );
+                } )
+            .then( () => {
+                // update local data - vue refresh the DOM
+                this.loaded = true;
+            } )
+            .catch( this.showError );
         },
-        geoSuccess( { coords } ) {
-            console.log( "position: ", coords );
-            // Export position
-            reqwest( {
-                "url": "/exports",
-                "method": "get",
-                "data": {
-                    "latitude": coords.latitude,
-                    "longitude": coords.longitude,
-                },
-                "success": this.ajaxSuccess,
-                "error": this.showError,
-            } );
+        showError( { message } ) {
+            this.loaded = true;
+            this.error = message;
         },
-    },
-    ajaxSuccess( oResponse ) {
-        console.log( "response: ", oResponse );
-        this.laoded = true;
-        this.exports = oResponse.data;
-    },
-    showError( oError ) {
-        this.laoded = true;
-        this.error = oError;
     },
 } );
 
