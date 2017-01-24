@@ -32,8 +32,10 @@ let oExportsList = Vue.component( "exports-list", {
             <ul>
                 <li v-for="elt in exports">
                     <router-link :to="'/' + elt.id">
-                        <strong>{{ elt.name }}</strong>
-                        <span>{{ elt.bState }}</span>
+                        <h3>{{ elt.name }}</h3>
+                        <strong>Actuellement : {{ state }}</strong>
+                        <span v-if="!elt.openState">fermé</span>
+                        <span v-if="elt.openState">ouvet</span>
                         <address>{{ elt.address }}</address>
                     </router-link>
                 </li>
@@ -60,8 +62,10 @@ let oExportsList = Vue.component( "exports-list", {
                 } )
                 .then( ( oResponse ) => {
                     // update local data - vue refresh the DOM
+                    let oExport = oResponse.data;
+
                     this.loaded = true;
-                    this.exports = oResponse.data;
+                    this.exports = oExport;
                 } )
                 .catch( this.showError );
         },

@@ -45,11 +45,19 @@ export default function( oRequest, oResponse ) {
         } )
         .toArray()
         .then( ( aExports = [] ) => {
-            let aCleanExports;
+            let aCleanExports,
+                bOpenState = false,
+                iCurrentDay = new Date().getDay(),
+                iCurrentHour = new Date().getHours() + ( new Date().getMinutes() / 60 );
 
-            aCleanExports = aExports.map( ( { _id, name, slug, latitude, longitude, address } ) => {
+            aCleanExports = aExports.map( ( { _id, name, slug, latitude, longitude, address, hours } ) => {
+                if ( iCurrentHour >= hours[ iCurrentDay ][ 0 ] && iCurrentHour <= hours[ iCurrentDay ][ 1 ] ) {
+                    bOpenState = true;
+                }
+
                 return {
                     "id": _id,
+                    "openState": bOpenState,
                     "distance": distance( oCurrentPosition, { latitude, longitude } ) * 1000,
                     name, slug, latitude, longitude, address,
                 };
