@@ -29,7 +29,7 @@ var
 
 // NOTE: As we see in class, gulp-sass cause somes issues when you try to run the reset-db task from inside the vagrant.
 // As we know that this will be the only task to run from vagrant, we put it inside an if, then add a return : from inside the vagrant, only the reset-db task will be accessible.
-if ( sUeser == "vagrant" ) {
+if ( sUser == "vagrant" ) {
     gulp.task( "reset-db", function( fNext ){
         // 1. Check if INSIDE vagrant
         if ( process.env.USER !== "vagrant" ) {
