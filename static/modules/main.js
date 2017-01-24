@@ -26,9 +26,11 @@ let oApp = new Vue( {
             <header>
                 <h1>Egzamen</h1>
             </header>
-            <router-view></router-view>
+            <main>
+                <router-view></router-view>
+            <main>
             <footer>
-                <a href="htt://github.com/mucht/egzamen">Le github</a>
+                <a href="https://github.com/Mucht/egzamen">Le github</a>
             </footer>
         </div>
     `,
