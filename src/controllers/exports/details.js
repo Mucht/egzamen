@@ -35,10 +35,18 @@ export default function( oRequest, oResponse ) {
             }
 
             let { _id, name, slug, latitude, longitude, address, hours } = oExport,
-                oCleanExport;
+                oCleanExport,
+                bOpenState,
+                iCurrentDay = new Date().getDay(),
+                iCurrentHour = new Date().getHours() + ( new Date().getMinutes() / 60 );
+
+            if ( iCurrentHour >= hours[ iCurrentDay ][ 0 ] && iCurrentHour <= hours[ iCurrentDay ][ 1 ] ) {
+                bOpenState = true;
+            }
 
             oCleanExport = {
                 "id": _id,
+                "openState": bOpenState,
                 name, slug, latitude, longitude, address, hours,
             };
 
