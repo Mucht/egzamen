@@ -9,7 +9,7 @@
 // The idea is to have a function that we can call and will returns the current user's location, with a Promise, and… fast. So the following code will keep the last position for 60 seconds, as cache.
 import Promise from "bluebird";
 
-const DEFAULT_OPTIONS = { "enableHightAccurency": true },
+const DEFAULT_OPTIONS = { "enableHightAccuracy": true },
     TTL = 60 * 1000; // 1 min
 
 let oLastPosition;

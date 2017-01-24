@@ -22,23 +22,27 @@ let oExportsList = Vue.component( "exports-list", {
         <div class="exports-list">
             <div class="loading" v-if="!loaded">
                 <p>loading…</p>
+
             </div>
             <div class="error" v-if="loaded && error">
                 <p>
                     <strong>Error:</strong> {{ error }}
                 </p>
             </div>
-            <ul v-if="loaded">
+            <ul>
                 <li v-for="elt in exports">
                     <router-link :to="'/' + elt.id">
                         <strong>{{ elt.name }}</strong>
-                        <span>{{ elt.state }}</span>
+                        <span>{{ elt.bState }}</span>
                         <address>{{ elt.address }}</address>
                     </router-link>
                 </li>
             </ul>
         </div>
     `,
+    mounted() {
+        this.updateExports();
+    },
     "methods": {
         updateExports() {
             // User position
@@ -54,11 +58,12 @@ let oExportsList = Vue.component( "exports-list", {
                         },
                     } );
                 } )
-            .then( () => {
-                // update local data - vue refresh the DOM
-                this.loaded = true;
-            } )
-            .catch( this.showError );
+                .then( ( oResponse ) => {
+                    // update local data - vue refresh the DOM
+                    this.loaded = true;
+                    this.exports = oResponse.data;
+                } )
+                .catch( this.showError );
         },
         showError( { message } ) {
             this.loaded = true;
