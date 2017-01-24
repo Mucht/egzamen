@@ -1,5 +1,6 @@
 {
   "env": {
+    "browser": true,
     "node": true,
     "es6": true
   },
@@ -166,7 +167,6 @@
     "space-unary-ops": [ 2, { "words": true, "nonwords": false } ],
     "spaced-comment": [ 2, "always" ],
 
-    "arrow-body-style": [ 2, "as-needed" ],
     "arrow-parens": [ 2, "always" ],
     "arrow-spacing": [ 2, { "before": true, "after": true } ],
     "constructor-super": 2,
@@ -182,7 +182,6 @@
     "no-useless-constructor": 2,
     "no-useless-rename": 2,
     "no-var": 2,
-    "object-shorthand": 2,
     "prefer-arrow-callback": 1,
     "prefer-rest-params": 2,
     "prefer-spread": 2,
