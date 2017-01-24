@@ -44,7 +44,6 @@ export default function( oRequest, oResponse ) {
     getExports()
         .insertOne( oExport )
         .then( () => {
-            send( oRequest, oResponse, oExport, 201 );
             send( oRequest, oResponse, {
                 "id": oExport._id,
                 "name": oExport.name || null,
