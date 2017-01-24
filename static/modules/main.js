@@ -7,40 +7,32 @@
 */
 
 import Vue from "vue";
-import "./components/teammates-list.js";
-import "./components/secret.js";
+import VueRouter from "vue-router";
+import ExportsList from "./components/exports-list.js";
+import ExportDetails from "./components/exports-details.js";
+
+Vue.use( VueRouter );
+
+let oRouter = new VueRouter( {
+    "routes": [
+        { "path": "/", "component": ExportsList },
+        { "path": "/:id", "component": ExportDetails },
+    ],
+} );
 
 let oApp = new Vue( {
     "template": `
-        <div class="box">
-            <p>{{ slogan }}</p>
-            <teammates-list v-bind:elements="teammates"></teammates-list>
-            <secret v-bind:content="secret"></secret>
+        <div class="wrapper">
+            <header>
+                <h1>Egzamen</h1>
+            </header>
+            <router-view></router-view>
+            <footer>
+                <a href="htt://github.com/mucht/egzamen">Le github</a>
+            </footer>
         </div>
     `,
-    "data": {
-        "slogan": "Ses co-équipiers :",
-        "secret": "Tony Stark",
-        "teammates": [
-            {
-                "heroName": "Captain America",
-                "realName": "Steve Rogers",
-            },
-            {
-                "heroName": "Hulk",
-                "realName": "Bruce Banner",
-            },
-            {
-                "heroName": "Hawkeye",
-                "realName": "Clint Barton",
-            },
-            {
-                "heroName": "Black Widow",
-                "realName": "Natasha Romanoff",
-            },
-        ],
-
-    },
+    "router": oRouter,
 } );
 
 oApp.$mount( "#app" );
