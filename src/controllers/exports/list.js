@@ -47,9 +47,13 @@ export default function( oRequest, oResponse ) {
         .then( ( aExports = [] ) => {
             let aCleanExports;
 
-            aCleanExports = aExports.map( ( { name, slug, latitude, longitude, address } ) => ( {
-                name, slug, address, latitude, longitude,
-            } ) );
+            aCleanExports = aExports.map( ( { _id, name, slug, latitude, longitude, address } ) => {
+                return {
+                    "id": _id,
+                    "distance": distance( oCurrentPosition, { latitude, longitude } ) * 1000,
+                    name, slug, latitude, longitude, address,
+                };
+            } );
 
             // sort by distance
             aCleanExports.sort( ( oExportOne, oExportTwo ) => oExportOne.distance - oExportTwo.distance );

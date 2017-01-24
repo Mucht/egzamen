@@ -13,14 +13,16 @@ import ExportsDetails from "./components/exports/details.js";
 
 Vue.use( VueRouter );
 
-let oRouter = new VueRouter( {
+let oRouter, oApp;
+
+oRouter = new VueRouter( {
     "routes": [
         { "path": "/", "component": ExportsList },
         { "path": "/:id", "component": ExportsDetails },
     ],
 } );
 
-let oApp = new Vue( {
+oApp = new Vue( {
     "template": `
         <div class="wrapper">
             <header>

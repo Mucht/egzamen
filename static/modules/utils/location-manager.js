@@ -10,7 +10,7 @@
 import Promise from "bluebird";
 
 const DEFAULT_OPTIONS = { "enableHightAccurency": true },
-    TTL = 60*1000; // 1 min
+    TTL = 60 * 1000; // 1 min
 
 let oLastPosition;
 
@@ -19,7 +19,7 @@ export default function( oOptions = {} ) {
         return Promise.resolve( oLastPosition );
     }
 
-    return new Promise( function( fResolve, fReject ) {
-        navigator.geolocation.getCurrentPosition( ( ( oPosition ) => fResolve( oLastPostion = oPosition ) ), fReject, Object.assign( {}, DEFAULT_OPTIONS, oOptions ) );
+    return new Promise( function( fResolve, fReject ) { // eslint-disable-line prefer-arrow-callback
+        navigator.geolocation.getCurrentPosition( ( oPosition ) => fResolve( oLastPosition = oPosition ), fReject, Object.assign( {}, DEFAULT_OPTIONS, oOptions ) );
     } );
-};
+}

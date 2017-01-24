@@ -10,8 +10,6 @@ import Vue from "vue";
 import reqwest from "reqwest";
 import getLocation from "../../utils/location-manager.js";
 
-const GEOLOCALISATION_OPTIONS = { "enableHightAccuracy": true };
-
 let oExportsList = Vue.component( "exports-list", {
     "data": function() {
         return {
