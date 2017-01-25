@@ -36,7 +36,7 @@ export default function( oRequest, oResponse ) {
 
             let { _id, name, slug, latitude, longitude, address, hours } = oExport,
                 oCleanExport,
-                bOpenState,
+                bOpenState = false,
                 iCurrentDay = new Date().getDay(),
                 iCurrentHour = new Date().getHours() + ( new Date().getMinutes() / 60 );
 
