@@ -20,8 +20,9 @@ let oExportsList = Vue.component( "exports-list", {
     },
     "template": `
         <div class="exports-list">
+            <p class="slogan">Un Quick tout près?</p>
             <div class="loading" v-if="!loaded">
-                <p>loading…</p>
+                <p>Chargement de la liste…</p>
 
             </div>
             <div class="error" v-if="loaded && error">
@@ -29,14 +30,20 @@ let oExportsList = Vue.component( "exports-list", {
                     <strong>Error:</strong> {{ error }}
                 </p>
             </div>
-            <ul>
-                <li v-for="elt in exports">
-                    <router-link :to="'/' + elt.id">
-                        <h3>{{ elt.name }}</h3>
+            <ul class="list">
+                <li class="listElt" v-for="elt in exports">
+                    <h3>{{ elt.name }}</h3>
+                    <p class="state">
                         <strong>Actuellement : {{ state }}</strong>
                         <span v-if="!elt.openState">fermé</span>
                         <span v-if="elt.openState">ouvet</span>
+                    </p>
+                    <section>
+                        <h3>Adresse</h3>
                         <address>{{ elt.address }}</address>
+                    </section>
+                    <router-link :to="'/' + elt.id">
+                        Plus d'info
                     </router-link>
                 </li>
             </ul>

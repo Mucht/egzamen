@@ -26,13 +26,11 @@ oApp = new Vue( {
     "template": `
         <div class="wrapper">
             <header>
-                <h1>Egzamen</h1>
-            </header>
-            <main>
+                <h1>RIA - Egzamen</h1>
                 <router-view></router-view>
             <main>
             <footer>
-                <a href="https://github.com/Mucht/egzamen">Le github</a>
+                <a href="https://github.com/Mucht/egzamen">Accès au GitHub</a>
             </footer>
         </div>
     `,
