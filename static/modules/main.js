@@ -22,6 +22,7 @@ oRouter = new VueRouter( {
     ],
 } );
 
+// Definition of base template & router
 oApp = new Vue( {
     "template": `
         <div class="wrapper">
@@ -37,4 +38,5 @@ oApp = new Vue( {
     "router": oRouter,
 } );
 
+// Link to views/index.pug element
 oApp.$mount( "#app" );

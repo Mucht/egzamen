@@ -15,6 +15,7 @@ const DEFAULT_OPTIONS = { "enableHightAccuracy": true },
 let oLastPosition;
 
 export default function( oOptions = {} ) {
+    // If within 60sec use the stored location
     if ( oLastPosition && Date.now() - oLastPosition.timestamp < TTL ) {
         return Promise.resolve( oLastPosition );
     }

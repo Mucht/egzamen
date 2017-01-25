@@ -98,12 +98,16 @@ let oExportDetails = Vue.component( "export-details", {
         </div>
     `,
     mounted() {
+        // Call the function below
         this.fetchInfos( this.$route.params.id );
     },
     "methods": {
+        // Define the function to get data we want
         fetchInfos( sExportID ) {
+            // get current possition
             return getLocation()
                 .then( ( { coords } ) => {
+                    // set route info & position from navigator
                     return reqwest( {
                         "url": `/exports/${ sExportID }`,
                         "method": "get",
@@ -114,10 +118,12 @@ let oExportDetails = Vue.component( "export-details", {
                     } );
                 } )
                 .then( ( oResponse ) => {
+                    // update local data - vue refresh the DOM
                     let oExport = oResponse.data;
 
                     this.loaded = true;
                     this.resto = oExport;
+                    // Formating the hours table to be readable
                     getReadableSchedule( this.resto.hours );
                 } )
                 .catch( this.showError );

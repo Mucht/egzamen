@@ -50,14 +50,16 @@ let oExportsList = Vue.component( "exports-list", {
         </div>
     `,
     mounted() {
+        // Calling function below
         this.updateExports();
     },
     "methods": {
+        // defining function
         updateExports() {
-            // User position
+            // Get current position
             return getLocation()
                 .then( ( { coords } ) => {
-                    // Get export at position
+                    // Get objects at position
                     return reqwest( {
                         "url": "/exports",
                         "method": "get",
