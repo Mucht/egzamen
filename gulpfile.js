@@ -116,7 +116,7 @@ gulp.task( "views", function(){
 
 gulp.task( "watch", function(){
     gulp.watch( "src/**/*.js", [ "build" ] );
-    gulp.watch( "src/wiexs/**", [ "views" ] );
+    gulp.watch( "src/views/**", [ "views" ] );
     gulp.watch( "static/sass/**/*.scss", [ "styles" ] );
     gulp.watch( "static/modules/**/*.js", [ "modules" ] );
 } );
