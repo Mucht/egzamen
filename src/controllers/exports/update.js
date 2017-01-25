@@ -29,7 +29,7 @@ export default function( oRequest, oResponse ) {
         sSlug = ( POST.name || "" ).trim()
             .replace( " ", "-" )
             .toLowerCase();
-
+    // Checking if the ID is valid
     try {
         oExportID = new ObjectID( oRequest.params.id );
     } catch ( oError ) {

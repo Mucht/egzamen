@@ -19,6 +19,7 @@ export default function( oRequest, oResponse ) {
     let oCurrentPosition = checkPosition( +oRequest.query.latitude, +oRequest.query.longitude ),
         iSearchRadius = +oRequest.query.radius;
 
+    // Checking if the position is valid
     if ( !oCurrentPosition ) {
         return error( oRequest, oResponse, "Invalid Position !", 400 );
     }
@@ -32,6 +33,7 @@ export default function( oRequest, oResponse ) {
     iSearchRadius *= ARC_KM;
 
     getExports()
+        // Find objects within the good radius
         .find( {
             "latitude": {
                 "$gt": oCurrentPosition.latitude - iSearchRadius,
@@ -41,9 +43,10 @@ export default function( oRequest, oResponse ) {
                 "$gt": oCurrentPosition.longitude - iSearchRadius,
                 "$lt": oCurrentPosition.longitude + iSearchRadius,
             },
-            "deleted_at": null,
         } )
+        // store the objects
         .toArray()
+        // Get data we want
         .then( ( aExports = [] ) => {
             let aCleanExports,
                 bOpenState = false,
@@ -51,6 +54,7 @@ export default function( oRequest, oResponse ) {
                 iCurrentHour = new Date().getHours() + ( new Date().getMinutes() / 60 );
 
             aCleanExports = aExports.map( ( { _id, name, slug, latitude, longitude, address, hours } ) => {
+                // Checking if it is open or not
                 if ( iCurrentHour >= hours[ iCurrentDay ][ 0 ] && iCurrentHour <= hours[ iCurrentDay ][ 1 ] ) {
                     bOpenState = true;
                 }
@@ -63,7 +67,7 @@ export default function( oRequest, oResponse ) {
                 };
             } );
 
-            // sort by distance
+            // Sorting objects by distance
             aCleanExports.sort( ( oExportOne, oExportTwo ) => oExportOne.distance - oExportTwo.distance );
             send( oRequest, oResponse, aCleanExports );
         } )

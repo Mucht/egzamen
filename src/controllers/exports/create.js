@@ -14,6 +14,7 @@ export default function( oRequest, oResponse ) {
 
     const POST = oRequest.body;
 
+    // get data form POST
     let iLatitude = +POST.latitude,
         iLongitude = +POST.longitude,
         sAddress = ( POST.address || "" ).trim(),
@@ -25,10 +26,12 @@ export default function( oRequest, oResponse ) {
             .replace( " ", "-" )
             .toLowerCase();
 
+    // Checking if position is valid
     if ( !oPosition ) {
         return error( oRequest, oResponse, "Invalid position", 400 );
     }
 
+    // If so => store data
     oExport = {
         "latitude": oPosition.latitude,
         "longitude": oPosition.longitude,
@@ -41,6 +44,7 @@ export default function( oRequest, oResponse ) {
     sAddress && ( oExport.address = sAddress );
     aHours && ( oExport.hours = aHours );
 
+    // Create the new one
     getExports()
         .insertOne( oExport )
         .then( () => {

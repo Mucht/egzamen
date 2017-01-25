@@ -14,12 +14,14 @@ export default function( oRequest, oResponse ) {
 
     let oExportID;
 
+    // Checking if the ID is valid
     try {
         oExportID = new ObjectID( oRequest.params.id );
     } catch ( oError ) {
         return error( oRequest, oResponse, new Error( "Invalid ID!" ), 400 );
     }
 
+    // If so => process the deletion
     getExports()
         .deleteOne( {
             "_id": oExportID,

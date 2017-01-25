@@ -17,17 +17,20 @@ export default function( oRequest, oResponse ) {
     let sExportID = ( oRequest.params.id || "" ).trim(),
         oCurrentPosition;
 
+    // Checking if ID is valid
     if ( !sExportID ) {
         error( oRequest, oResponse, "Invalid ID !", 400 );
     }
 
+    // if so => Calculating the distance
     oCurrentPosition = checkPosition( +oRequest.query.latitude, +oRequest.query.longitude );
 
     getExports()
+        // Find the object with the right ID
         .findOne( {
             "_id": new ObjectID( sExportID ),
-            "deleted_at": null,
         } )
+        // Store &send data we want in one object
         .then( ( oExport ) => {
 
             if ( !oExport ) {
