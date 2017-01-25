@@ -43,9 +43,8 @@ let oExportDetails = Vue.component( "export-details", {
                     <address>{{ resto.address }}</address>
                 </section>
                 <section class="coords">
-                    <h3>Coordonnées</h3>
-                    <p>Latitude: {{ resto.latitude }}</p>
-                    <p>Longitude: {{ resto.longitude }}</p>
+                    <h3>Distance</h3>
+                    <p>{{ resto.distance }}m</p>
                 </section>
                 <section class="schedule">
                     <h3>Horaire</h3>

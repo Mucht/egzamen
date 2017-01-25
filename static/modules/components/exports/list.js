@@ -34,16 +34,20 @@ let oExportsList = Vue.component( "exports-list", {
                 <li class="listElt" v-for="elt in exports">
                     <h3>{{ elt.name }}</h3>
                     <p class="state">
-                        <strong>Actuellement : {{ state }}</strong>
+                        <strong>Actuellement: </strong>
                         <span v-if="!elt.openState">fermé</span>
-                        <span v-if="elt.openState">ouvet</span>
+                        <span v-if="elt.openState">ouvert</span>
+                    </p>
+                    <p class="state">
+                        <strong>Distance: </strong>
+                        <span>{{ elt.distance }}m</span>
                     </p>
                     <section>
                         <h3>Adresse</h3>
                         <address>{{ elt.address }}</address>
                     </section>
                     <router-link :to="'/' + elt.id">
-                        Plus d'info
+                        Plus d'infos
                     </router-link>
                 </li>
             </ul>
